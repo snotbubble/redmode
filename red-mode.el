@@ -118,7 +118,7 @@
 			(x-datetime '("now" "date" "time" "precise" "weekday" "month" "year" "second"))
 			(x-viewcmd '("across" "alert" "as-pair" "below" "brightness?" "caret-to-offset" "center-face" "choose" "clear-fields" "do-events" "flash" "focus" "hide-popup" "hide" "in-window?" "inform" "link?" "load-image" "make-face" "offset-to-caret" "request-color" "request" "request-date" "request-download" "request-file" "request-list" "request-pass" "request-text" "return" "show-popup" "show" "size-text" "span?" "stylize" "unfocus" "unview" "viewed?" "within?"))
 			(x-viewobj '("panel" "font" "area" "check" "face" "tab-panel" "button" "image" "field" "drop-list" "drop-down" "text-list" "text" "slider" "layout" "view"))
-			(x-viewprp '("all-over" "text" "offset" "size" "x" "y" "data" "extra" "options" "flags" "color" "font-size" "font-weight" "font-name" "font-style" "selected" "pane" "tight" "loose" "bold" "picked" "parent"))
+			(x-viewprp '("all-over" "anti-alias" "text" "offset" "size" "x" "y" "data" "extra" "options" "flags" "color" "font-size" "font-weight" "font-name" "font-style" "selected" "pane" "tight" "loose" "bold" "picked" "parent"))
 			(x-constants '("black" "red" "white" "green" "papaya" "blue"))
 			(x-events '("event" "on-change" "on-enter" "on-menu" "on-down" "on-up" "on-resizing" "react" "on-drag" "on-mid-down" "on-mid-up" "on-wheel" "on-over"))
 			(x-drawcmd '("draw"))
@@ -127,11 +127,12 @@
 			;; generate regex string for each category of keywords
 			;; suffixed words 1st, as they contain many duplicates
 			(x-logic-regexp (regexp-opt x-logic 'words))
-			(x-comparison-regexp (regexp-opt x-comparison 'words))
 			;; hyphenated words, may contain duplicates
 			(x-datatypes-regexp (regexp-opt x-datatypes 'words))
 			(x-viewprp-regexp (regexp-opt x-viewprp 'words))
 			(x-events-regexp (regexp-opt x-events 'words))
+			;; special exception
+			(x-comparison-regexp (regexp-opt x-comparison 'words))
 			;; may contain the odd hyphen or suffix, but mostly pure
 			(x-context-regexp (regexp-opt x-context 'words))
 			(x-io-regexp (regexp-opt x-io 'words))
@@ -152,14 +153,15 @@
 		)
 		`(
 			;; try comment 1st - cpb 210321
-			;;(";.+ *" . red-comment-word)
+			;;(,"*? " . red-logic-word)
 			;; suffixed
 			(,x-logic-regexp . red-logic-word) 
-			(,x-comparison-regexp . red-comparison-word)
 			;; hyphenated
 			(,x-datatypes-regexp . red-datatypes-word) 
 			(,x-viewprp-regexp . red-viewprp-word) 
 			(,x-events-regexp . red-events-word)
+			;; special exception
+			(,x-comparison-regexp . red-comparison-word)
 			;; some suffixes or hyphens
 			(,x-context-regexp . red-context-word) 
 			(,x-io-regexp . red-io-word) 
