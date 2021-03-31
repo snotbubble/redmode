@@ -1,3 +1,5 @@
 # redmode
 
-![screenie](210329b_redmode.png)
+*work in progress*
+
+![screenie](210401_redmode_screenie.png)
